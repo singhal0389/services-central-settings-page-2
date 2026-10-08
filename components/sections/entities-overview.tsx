@@ -22,12 +22,20 @@ export function EntitiesOverview({ onOpen }: { onOpen: (s: Section, entityId?: s
           can("create-entity") ? (
             <EbayButton priority="primary" onClick={() => onOpen("entity-new")}>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                <EbayIconAdd16 aria-hidden="true" /> New Business Entity
+                <EbayIconAdd16 aria-hidden="true" /> Add a new entity
               </span>
             </EbayButton>
           ) : undefined
         }
       />
+
+      {scopedEntities.length === 0 && (
+        <Card className={cards.cardPad}>
+          <p style={{ margin: 0, textAlign: "center", color: "var(--color-foreground-secondary)" }}>
+            No entities found.
+          </p>
+        </Card>
+      )}
 
       <div className={cards.cardGrid2}>
         {scopedEntities.map((e) => {

@@ -12,11 +12,15 @@ export function FileDropzone({
   onFile,
   accept = ".pdf,.jpg,.jpeg,.png",
   hint = "PDF, JPG or PNG · up to 10MB",
+  title,
+  actionLabel,
 }: {
   file: File | null
   onFile: (f: File | null) => void
   accept?: string
   hint?: string
+  title?: string
+  actionLabel?: string
 }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [dragging, setDragging] = useState(false)
@@ -67,10 +71,30 @@ export function FileDropzone({
         }}
       >
         <EbayIconUpload24 aria-hidden="true" />
-        <span style={{ fontSize: 14 }}>
-          <strong style={{ color: "var(--color-foreground-accent)" }}>Browse</strong> or drag and drop a file here
-        </span>
+        {title ? (
+          <span style={{ fontSize: 14, fontWeight: 600, color: "var(--color-foreground-primary)" }}>{title}</span>
+        ) : (
+          <span style={{ fontSize: 14 }}>
+            <strong style={{ color: "var(--color-foreground-accent)" }}>Browse</strong> or drag and drop a file here
+          </span>
+        )}
         <span style={{ fontSize: 12 }}>{hint}</span>
+        {actionLabel && (
+          <span
+            style={{
+              marginTop: 4,
+              padding: "6px 16px",
+              fontSize: 14,
+              fontWeight: 600,
+              borderRadius: 999,
+              border: "1px solid var(--color-border-medium)",
+              color: "var(--color-foreground-primary)",
+              background: "var(--color-background-primary)",
+            }}
+          >
+            {actionLabel}
+          </span>
+        )}
       </div>
       <input
         ref={inputRef}
