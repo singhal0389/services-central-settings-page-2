@@ -1,0 +1,362 @@
+/* Prototype review layer. Deliberately does not use the eBay palette so it
+   never reads as part of the product being reviewed. */
+/* Tokens must be valued on the two top-level blocks, since every other rule in
+   this file is a descendant of one of them. Declaring them on an unused class
+   silently makes every var() resolve to nothing. */
+.bar,
+.layer {
+  --rv-ink: #1c1c1c;
+  --rv-accent: #b8500a;
+  --rv-paper: #ffffff;
+  --rv-muted: #6b6b6b;
+  --rv-line: #e0e0e0;
+}
+
+/* ---------- top bar (the flipper) ---------- */
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background-color: var(--rv-ink);
+  color: var(--rv-paper);
+}
+.barInner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 24px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.barTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.barDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--rv-accent);
+}
+.barSpacer {
+  flex: 1;
+}
+.barCount {
+  color: #c7c7c7;
+}
+.barNote {
+  color: #9a9a9a;
+}
+.barBtn {
+  border: 1px solid #4a4a4a;
+  background: none;
+  color: var(--rv-paper);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.barBtn:hover {
+  border-color: var(--rv-paper);
+}
+
+/* switch */
+.flip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--rv-paper);
+}
+.flipTrack {
+  position: relative;
+  width: 38px;
+  height: 22px;
+  border-radius: 11px;
+  background-color: #565656;
+  transition: background-color 120ms ease;
+  flex: none;
+}
+.flipOn .flipTrack {
+  background-color: var(--rv-accent);
+}
+.flipKnob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--rv-paper);
+  transition: transform 120ms ease;
+}
+.flipOn .flipKnob {
+  transform: translateX(16px);
+}
+
+/* ---------- comment list panel ---------- */
+.panel {
+  position: absolute;
+  right: 24px;
+  top: calc(100% + 8px);
+  width: 340px;
+  max-height: 60vh;
+  overflow-y: auto;
+  background-color: var(--rv-paper);
+  color: var(--rv-ink);
+  border: 1px solid var(--rv-line);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 18%);
+  padding: 12px;
+}
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.panelTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+.panelGroup + .panelGroup {
+  margin-top: 12px;
+}
+.panelGroupTitle {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--rv-muted);
+}
+.panelItem {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--rv-line);
+  border-radius: 8px;
+  background: none;
+  font-family: inherit;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.panelItem + .panelItem {
+  margin-top: 6px;
+}
+.panelItem:hover {
+  border-color: var(--rv-accent);
+}
+.panelItemHead {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+.panelIndex {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--rv-accent);
+  color: var(--rv-paper);
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.panelAuthor {
+  font-size: 13px;
+  font-weight: 700;
+}
+.panelTime {
+  font-size: 11px;
+  color: var(--rv-muted);
+}
+.panelBody {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.panelEmpty {
+  margin: 0;
+  font-size: 13px;
+  color: var(--rv-muted);
+}
+.panelFoot {
+  margin: 10px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--rv-line);
+  font-size: 11px;
+  color: var(--rv-muted);
+}
+
+/* ---------- pins + cards on the page ---------- */
+.layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+.pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50% 50% 50% 4px;
+  border: 2px solid var(--rv-paper);
+  background-color: var(--rv-accent);
+  color: var(--rv-paper);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 28%);
+}
+.pinActive {
+  background-color: var(--rv-ink);
+}
+
+.card {
+  position: absolute;
+  width: 300px;
+  background-color: var(--rv-paper);
+  color: var(--rv-ink);
+  border: 1px solid var(--rv-line);
+  border-radius: 10px;
+  box-shadow: 0 14px 36px rgb(0 0 0 / 22%);
+  padding: 12px;
+  pointer-events: auto;
+}
+.cardLeft {
+  transform: translate(-100%, 0);
+}
+.cardHead {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.cardAuthor {
+  font-size: 13px;
+  font-weight: 700;
+}
+.cardMeta {
+  font-size: 11px;
+  color: var(--rv-muted);
+}
+.cardBody {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.cardActions {
+  display: flex;
+  gap: 8px;
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--rv-muted);
+  margin-bottom: 4px;
+}
+.input,
+.textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--rv-ink);
+  background-color: var(--rv-paper);
+  border: 1px solid #9a9a9a;
+  border-radius: 6px;
+  padding: 7px 9px;
+}
+.textarea {
+  resize: vertical;
+  min-height: 68px;
+}
+.input:focus,
+.textarea:focus {
+  outline: 2px solid var(--rv-accent);
+  outline-offset: 1px;
+}
+.field + .field {
+  margin-top: 8px;
+}
+.formActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+.primaryBtn {
+  border: none;
+  background-color: var(--rv-accent);
+  color: var(--rv-paper);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.primaryBtn:disabled {
+  background-color: #cfcfcf;
+  color: #767676;
+  cursor: not-allowed;
+}
+.ghostBtn,
+.dangerBtn {
+  border: 1px solid var(--rv-line);
+  background: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--rv-ink);
+}
+.ghostBtn:hover {
+  border-color: var(--rv-muted);
+}
+.dangerBtn {
+  color: #a5100e;
+  border-color: #e7b9b8;
+}
+.dangerBtn:hover {
+  background-color: #fdf2f2;
+}
+.errorText {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #a5100e;
+}
+.hintText {
+  margin: 0 0 8px;
+  font-size: 11px;
+  color: var(--rv-muted);
+}

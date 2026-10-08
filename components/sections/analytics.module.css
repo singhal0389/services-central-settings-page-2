@@ -1,0 +1,667 @@
+/* Analytics page: KPI strip + per-metric chart cards.
+   Data-viz fills are literal design values; everything else runs on Evo tokens
+   so the page keeps working with the rest of the shell's theme. */
+
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sticky header ---------------------------------------------------------- */
+/* The design marks the title, tabs, controls and KPI strip as sticky, so the
+   metric cards scroll underneath them. `--sticky-top` is measured from the
+   shell's own sticky top bar at runtime. */
+.stickyHead {
+  position: sticky;
+  top: var(--sticky-top, 0px);
+  z-index: 20;
+  background-color: var(--color-background-elevated);
+  padding-bottom: var(--spacing-300);
+}
+.stickyHead::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: var(--color-border-subtle);
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0 0 var(--spacing-300);
+  color: var(--color-foreground-primary);
+}
+
+/* Tabs ------------------------------------------------------------------- */
+.tabs {
+  display: flex;
+  gap: var(--spacing-400);
+  margin-bottom: var(--spacing-300);
+}
+.tab {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-foreground-secondary);
+  padding: 0 0 8px;
+  border-bottom: 2px solid transparent;
+}
+.tab:hover:not(:disabled) {
+  color: var(--color-foreground-primary);
+}
+.tabActive,
+.tabActive:hover {
+  font-weight: 700;
+  color: var(--color-foreground-primary);
+  border-bottom-color: var(--color-foreground-primary);
+}
+.tab:disabled {
+  cursor: not-allowed;
+  color: var(--color-foreground-disabled, #c7c7c7);
+}
+
+/* Controls --------------------------------------------------------------- */
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-200);
+  margin-bottom: var(--spacing-300);
+}
+.pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 18px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 999px;
+  background-color: var(--color-background-elevated);
+  color: var(--color-foreground-primary);
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+.pill:hover {
+  border-color: var(--color-foreground-secondary);
+}
+.pillActive {
+  border-color: var(--color-foreground-primary);
+  box-shadow: inset 0 0 0 1px var(--color-foreground-primary);
+}
+.pillMuted {
+  color: var(--color-foreground-secondary);
+}
+.pillCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background-color: var(--color-foreground-primary);
+  color: var(--color-background-elevated);
+  font-size: 12px;
+  font-weight: 700;
+}
+.pill svg {
+  flex: none;
+}
+
+.modeToggle {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.modeLabel {
+  font-size: 16px;
+  color: var(--color-foreground-secondary);
+}
+.modeLabelActive {
+  font-weight: 700;
+  color: var(--color-foreground-primary);
+}
+.switch {
+  width: 56px;
+  height: 32px;
+  flex: none;
+  border: none;
+  border-radius: 999px;
+  background-color: var(--color-foreground-primary);
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+}
+.switchOn {
+  justify-content: flex-end;
+}
+.knob {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--color-background-elevated);
+}
+
+/* Filter chips ----------------------------------------------------------- */
+.chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: var(--spacing-300);
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 6px 0 12px;
+  border-radius: 999px;
+  background-color: var(--color-background-secondary);
+  font-size: 14px;
+  color: var(--color-foreground-primary);
+}
+.chipRemove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  color: var(--color-foreground-secondary);
+  font-size: 15px;
+  line-height: 1;
+}
+.chipRemove:hover {
+  background-color: var(--color-border-subtle);
+  color: var(--color-foreground-primary);
+}
+.linkBtn {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--color-foreground-accent);
+  text-decoration: underline;
+}
+.scopeNote {
+  font-size: 14px;
+  color: var(--color-foreground-secondary);
+}
+
+/* KPI strip -------------------------------------------------------------- */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-300);
+}
+.kpi {
+  background-color: var(--color-background-secondary);
+  border-radius: 8px;
+  padding: 18px 24px 22px;
+}
+.kpiLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-foreground-primary);
+  margin: 0 0 6px;
+}
+.kpiValue {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-foreground-primary);
+}
+
+/* Metric cards ----------------------------------------------------------- */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-400);
+  padding-top: var(--spacing-400);
+}
+.card {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+  padding: var(--spacing-400);
+  background-color: var(--color-background-elevated);
+}
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-300);
+}
+.cardLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-foreground-primary);
+  margin: 0;
+}
+.csvBtn {
+  margin-left: auto;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 18px;
+  border: 1px solid var(--color-foreground-accent);
+  border-radius: 999px;
+  background-color: var(--color-background-elevated);
+  color: var(--color-foreground-accent);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.csvBtn:hover {
+  background-color: var(--color-background-secondary);
+}
+.valueRow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 10px 0 0;
+}
+.value {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-foreground-primary);
+}
+.caption {
+  font-size: 14px;
+  color: var(--color-foreground-secondary);
+}
+.captionStrong {
+  font-weight: 700;
+  color: var(--color-foreground-primary);
+}
+
+.cardControls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-300);
+  flex-wrap: wrap;
+  margin-top: var(--spacing-300);
+}
+.segmented {
+  display: flex;
+  flex: 1;
+  min-width: 260px;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 999px;
+}
+.segBtn {
+  flex: 1;
+  height: 40px;
+  border: none;
+  border-radius: 999px;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--color-foreground-primary);
+}
+.segBtn:hover:not(.segBtnActive) {
+  background-color: var(--color-background-secondary);
+}
+.segBtnActive {
+  background-color: var(--color-foreground-primary);
+  color: var(--color-background-elevated);
+  font-weight: 700;
+}
+.reasonPill {
+  composes: pill;
+  border-radius: 8px;
+  max-width: 460px;
+}
+.reasonValue {
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.note {
+  margin: var(--spacing-300) 0 0;
+  font-size: 13px;
+  color: var(--color-foreground-secondary);
+}
+
+/* Charts ----------------------------------------------------------------- */
+.chartWrap {
+  position: relative;
+  margin-top: var(--spacing-300);
+}
+.chartSvg {
+  display: block;
+  touch-action: none;
+}
+.gridline {
+  stroke: var(--color-border-subtle);
+  stroke-width: 1;
+}
+.axisLabel {
+  fill: var(--color-foreground-secondary);
+  font-size: 12px;
+}
+.line {
+  fill: none;
+  stroke: #288034;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.lineDot {
+  fill: #288034;
+}
+.hoverRule {
+  stroke: var(--color-foreground-secondary);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+.benchmark {
+  stroke: var(--color-foreground-primary);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+}
+.benchmarkNote {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: var(--color-foreground-secondary);
+}
+.benchmarkSwatch {
+  width: 22px;
+  height: 0;
+  border-top: 1.5px dashed var(--color-foreground-primary);
+}
+
+.readout {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background-color: var(--color-foreground-primary);
+  color: var(--color-background-elevated);
+  font-size: 13px;
+  pointer-events: none;
+}
+.readoutRange {
+  opacity: 0.75;
+}
+.readoutValue {
+  font-weight: 700;
+}
+.readoutFlag {
+  padding-left: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  opacity: 0.85;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  list-style: none;
+  margin: var(--spacing-300) 0 0;
+  padding: 0;
+}
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-foreground-secondary);
+}
+.legendSwatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex: none;
+}
+
+/* Info tooltip ----------------------------------------------------------- */
+.info {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: help;
+  color: var(--color-foreground-secondary);
+}
+.info::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+}
+.infoBubble {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: -8px;
+  z-index: 40;
+  width: 260px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: var(--color-foreground-primary);
+  color: var(--color-background-elevated);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.45;
+}
+
+/* Popovers --------------------------------------------------------------- */
+.popoverHost {
+  position: relative;
+}
+.popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 50;
+  width: 340px;
+  padding: var(--spacing-300);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+  background-color: var(--color-background-elevated);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.popoverWide {
+  width: 420px;
+}
+.popoverRight {
+  left: auto;
+  right: 0;
+}
+.popoverTitle {
+  margin: 0 0 var(--spacing-200);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-foreground-primary);
+}
+.optionList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 260px;
+  overflow-y: auto;
+  margin: 0 0 var(--spacing-200);
+}
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: var(--radius-medium);
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  text-align: left;
+  color: var(--color-foreground-primary);
+}
+.option:hover {
+  background-color: var(--color-background-secondary);
+}
+.optionSelected {
+  font-weight: 700;
+}
+.box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  border: 1px solid var(--color-foreground-secondary);
+  border-radius: 3px;
+  background-color: var(--color-background-elevated);
+  color: var(--color-background-elevated);
+  font-size: 12px;
+  line-height: 1;
+}
+.boxOn {
+  border-color: var(--color-foreground-accent);
+  background-color: var(--color-foreground-accent);
+}
+.radio {
+  composes: box;
+  border-radius: 50%;
+}
+.swatchDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex: none;
+}
+.popoverFooter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: var(--spacing-200);
+  border-top: 1px solid var(--color-border-subtle);
+}
+.popoverFooter .linkBtn {
+  margin-right: auto;
+}
+.primaryBtn {
+  height: 36px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 999px;
+  background-color: var(--color-foreground-accent);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.primaryBtn:disabled {
+  background-color: var(--color-border-subtle);
+  color: var(--color-foreground-secondary);
+  cursor: not-allowed;
+}
+.ghostBtn {
+  height: 36px;
+  padding: 0 16px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 999px;
+  background: none;
+  color: var(--color-foreground-primary);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.builderRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: var(--spacing-200);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fieldLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-foreground-secondary);
+}
+.select {
+  height: 40px;
+  padding: 0 8px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-medium);
+  background-color: var(--color-background-elevated);
+  color: var(--color-foreground-primary);
+  font-family: inherit;
+  font-size: 15px;
+}
+
+/* Undefined tab ---------------------------------------------------------- */
+.tbd {
+  margin-top: var(--spacing-500);
+  padding: var(--spacing-500);
+  border: 1px dashed var(--color-border-subtle);
+  border-radius: 8px;
+  text-align: center;
+  color: var(--color-foreground-secondary);
+}
+.tbd h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: var(--color-foreground-primary);
+}
+.tbd p {
+  margin: 0;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .kpis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

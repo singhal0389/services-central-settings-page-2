@@ -1,0 +1,88 @@
+/* ---------------------------------------------------------------------------
+   Services Central — eBay Evo Design System global stylesheet.
+   Skin imports MUST come before the tailwindcss import, and tailwind is
+   imported with `no-preflight` so its reset doesn't clobber Evo base styles.
+--------------------------------------------------------------------------- */
+
+/* Market Sans typeface (CDN webfonts shipped by @ebay/skin) */
+@import "@ebay/skin/marketsans.css";
+
+/* Design tokens: core primitives (:root) + light/dark semantic aliases */
+@import "@ebay/skin/tokens/evo-core.css";
+@import "./evo-theme.css";
+
+/* Global baseline + icon system */
+@import "@ebay/skin/global.css";
+@import "@ebay/skin/icon.css";
+
+/* Component styles used across the app */
+@import "@ebay/skin/button.css";
+@import "@ebay/skin/icon-button.css";
+@import "@ebay/skin/cta-button.css";
+@import "@ebay/skin/textbox.css";
+@import "@ebay/skin/field.css";
+@import "@ebay/skin/form.css";
+@import "@ebay/skin/checkbox.css";
+@import "@ebay/skin/radio.css";
+@import "@ebay/skin/switch.css";
+@import "@ebay/skin/select.css";
+@import "@ebay/skin/chip.css";
+@import "@ebay/skin/filter-chip.css";
+@import "@ebay/skin/badge.css";
+@import "@ebay/skin/inline-notice.css";
+@import "@ebay/skin/section-notice.css";
+@import "@ebay/skin/page-notice.css";
+@import "@ebay/skin/section-title.css";
+@import "@ebay/skin/card.css";
+@import "@ebay/skin/tabs.css";
+@import "@ebay/skin/menu.css";
+@import "@ebay/skin/menu-button.css";
+@import "@ebay/skin/details.css";
+@import "@ebay/skin/tooltip.css";
+@import "@ebay/skin/infotip.css";
+@import "@ebay/skin/progress-stepper.css";
+@import "@ebay/skin/signal.css";
+
+/* Local Market Sans (attached OTF) — offline fallback for the CDN webfonts */
+@font-face {
+  font-family: "Market Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/MarketSans-Regular.otf") format("opentype");
+}
+@font-face {
+  font-family: "Market Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/MarketSans-Bold.otf") format("opentype");
+}
+
+/* Tailwind utilities — MUST come after skin imports; no-preflight keeps
+   Tailwind's reset from overriding Evo base styles. */
+@import "tailwindcss" no-preflight;
+
+/* App shell */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background-secondary);
+  color: var(--color-foreground-primary);
+  font-family: "Market Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Radio/checkbox render as 0x0 when Tailwind preflight-like resets hide
+   [hidden]. Force skin's icon spans to display. */
+@layer base {
+  span.radio__icon[hidden],
+  span.checkbox__icon[hidden] {
+    display: inline-flex !important;
+  }
+}

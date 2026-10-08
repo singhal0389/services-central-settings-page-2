@@ -1,0 +1,413 @@
+/* App shell: fixed header + left nav + content. Composed from Evo tokens. */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background-secondary);
+}
+
+/* Header ------------------------------------------------------------------ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-300);
+  height: 60px;
+  padding-inline: var(--spacing-350);
+  background-color: var(--color-background-elevated);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-150);
+  text-decoration: none;
+  color: var(--color-foreground-primary);
+  flex: none;
+}
+.brandLogo {
+  width: 62px;
+  height: 25px;
+  display: inline-flex;
+  align-items: center;
+}
+.brandLogo svg {
+  width: 62px;
+  height: auto;
+}
+.brandDivider {
+  width: 1px;
+  height: 22px;
+  background-color: var(--color-border-medium);
+}
+.brandName {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.headerRight {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-200);
+}
+
+/* Role switcher chip in the header */
+.rolePicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-100);
+}
+.rolePickerLabel {
+  font-size: 12px;
+  color: var(--color-foreground-secondary);
+  white-space: nowrap;
+}
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--color-background-accent);
+  color: var(--color-foreground-on-accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex: none;
+}
+
+/* Body layout ------------------------------------------------------------- */
+.body {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+}
+.nav {
+  position: sticky;
+  top: 60px;
+  align-self: flex-start;
+  width: 252px;
+  flex: none;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  background-color: var(--color-background-elevated);
+  border-right: 1px solid var(--color-border-subtle);
+  padding: var(--spacing-300) var(--spacing-200);
+}
+.navGroupLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-foreground-secondary);
+  padding: var(--spacing-150) var(--spacing-200) var(--spacing-100);
+}
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-150);
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--radius-medium);
+  padding: var(--spacing-150) var(--spacing-200);
+  font-size: 14px;
+  color: var(--color-foreground-primary);
+  font-family: inherit;
+}
+.navItem:hover {
+  background-color: var(--color-background-secondary);
+}
+.navItemActive,
+.navItemActive:hover {
+  background-color: var(--color-background-education);
+  color: var(--color-foreground-accent);
+  font-weight: 600;
+}
+.navItemIcon {
+  display: inline-flex;
+  flex: none;
+}
+.navSub {
+  padding-left: var(--spacing-500);
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: var(--spacing-400) var(--spacing-500);
+  max-width: 1100px;
+  width: 100%;
+  margin-inline: auto;
+}
+
+/* Back link on destination pages */
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-50);
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-foreground-secondary);
+  padding: 0;
+  margin-bottom: var(--spacing-300);
+}
+.backLink:hover {
+  color: var(--color-foreground-accent);
+}
+
+/* Entity switcher (Stripe-style) ------------------------------------------ */
+.entitySwitcher {
+  position: relative;
+}
+.entityTrigger {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-150);
+  width: 100%;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-large);
+  background-color: var(--color-background-elevated);
+  padding: var(--spacing-150) var(--spacing-200);
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--color-foreground-primary);
+  margin-bottom: var(--spacing-250);
+}
+.entityTrigger:hover {
+  border-color: var(--color-border-medium);
+}
+.entityMark {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-medium);
+  background: var(--color-background-strong);
+  color: var(--color-foreground-on-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex: none;
+}
+.entityMeta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.entityName {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.entityJur {
+  font-size: 12px;
+  color: var(--color-foreground-secondary);
+}
+.entityMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  margin-top: -12px;
+  background-color: var(--color-background-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-raised, 0 8px 24px rgba(0, 0, 0, 0.14));
+  padding: var(--spacing-100);
+  overflow: hidden;
+}
+.entityMenuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-150);
+  width: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--radius-medium);
+  padding: var(--spacing-150);
+  font-family: inherit;
+  text-align: left;
+  color: var(--color-foreground-primary);
+}
+.entityMenuItem:hover {
+  background-color: var(--color-background-secondary);
+}
+
+/* Header variant of the entity switcher: compact, drops downward */
+.entitySwitcherHeader .entityTrigger {
+  width: auto;
+  margin-bottom: 0;
+  padding: var(--spacing-100) var(--spacing-150);
+}
+.entitySwitcherHeader .entityMark {
+  width: 26px;
+  height: 26px;
+  font-size: 11px;
+}
+.entitySwitcherHeader .entityJur {
+  display: none;
+}
+.entitySwitcherHeader .entityName {
+  font-size: 13px;
+  max-width: 160px;
+}
+.entitySwitcherHeader .entityMenu {
+  left: auto;
+  right: 0;
+  min-width: 240px;
+  margin-top: var(--spacing-100);
+}
+.entitySwitcherHeader .entityMenu .entityJur {
+  display: block;
+}
+
+/* Settings home ----------------------------------------------------------- */
+  .settingsSections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-600);
+}
+.settingsSection {
+  display: flex;
+  flex-direction: column;
+}
+.settingsSectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-foreground-primary);
+  padding-bottom: var(--spacing-200);
+  margin-bottom: var(--spacing-350);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.settingsColumns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-500);
+}
+.settingsColGroup {
+  display: flex;
+  flex-direction: column;
+}
+.settingsGroupTitle {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-foreground-secondary);
+  margin-bottom: var(--spacing-250);
+}
+.settingsLinkList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-200);
+}
+.settingsLink {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--color-foreground-accent);
+}
+.settingsLink:hover {
+  text-decoration: underline;
+}
+.settingsEmpty {
+  font-size: 13px;
+  color: var(--color-foreground-secondary);
+  opacity: 0.7;
+}
+.settingsComingSoonLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-foreground-secondary);
+}
+
+@media (max-width: 860px) {
+  .settingsColumns {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-400);
+  }
+}
+
+/* Page header ------------------------------------------------------------- */
+.pageHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-300);
+  margin-bottom: var(--spacing-350);
+  flex-wrap: wrap;
+}
+.pageTitle {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+.pageSub {
+  font-size: 14px;
+  color: var(--color-foreground-secondary);
+  margin: var(--spacing-100) 0 0;
+  max-width: 64ch;
+}
+
+/* Tab bar ----------------------------------------------------------------- */
+.tabbar {
+  display: flex;
+  gap: var(--spacing-50);
+  border-bottom: 1px solid var(--color-border-subtle);
+  margin-bottom: var(--spacing-400);
+  overflow-x: auto;
+}
+.tab {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-foreground-secondary);
+  padding: var(--spacing-200) var(--spacing-250);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+.tab:hover {
+  color: var(--color-foreground-primary);
+}
+.tabActive,
+.tabActive:hover {
+  color: var(--color-foreground-accent);
+  border-bottom-color: var(--color-foreground-accent);
+  font-weight: 600;
+}
+
+/* Responsive -------------------------------------------------------------- */
+@media (max-width: 800px) {
+  .nav {
+    display: none;
+  }
+  .content {
+    padding: var(--spacing-300);
+  }
+}

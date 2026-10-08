@@ -1,0 +1,343 @@
+.methodGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-200);
+}
+.methodCard {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-150);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-medium);
+  padding: var(--spacing-200) var(--spacing-250);
+}
+.methodCard[data-on="true"] {
+  border-color: var(--color-border-accent);
+  background: var(--color-background-education);
+}
+.methodCard[data-disabled="true"] {
+  opacity: 0.55;
+}
+/* Summary card facts: PPE, currencies and payment methods each get their own
+   label so the value it belongs to is unambiguous. The label sits above the
+   value because these cards are half-width — a side-by-side label column
+   leaves too little room and drops every chip onto its own line. */
+.metaRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+}
+.metaLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground-secondary);
+}
+.metaValue {
+  font-weight: 700;
+}
+/* The gap between chips has to beat the gap inside one, or "GBP Default EUR"
+   reads as though Default belongs to EUR. */
+.metaChips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  min-width: 0;
+}
+.metaChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.metaDefault {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground-accent);
+}
+.methodChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.methodDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+.metaMore {
+  font-size: 12px;
+  color: var(--color-foreground-secondary);
+}
+
+.methodLogo {
+  width: 34px;
+  height: 24px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  flex: none;
+  letter-spacing: 0.02em;
+}
+.methodName {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 0;
+}
+/* Pending agreement. Deliberately neutral: the attention tokens resolve to the
+   same red as an error, and an application waiting its turn is not a fault. */
+.methodReview {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  border: 1px solid var(--color-border-medium);
+  border-radius: 999px;
+  background: var(--color-background-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground-secondary);
+  white-space: nowrap;
+}
+
+/* A wallet whose state follows the card brands. Not a control, so it must not
+   look like one. */
+.methodDerived {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  border: 1px solid var(--color-border-medium);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground-secondary);
+  white-space: nowrap;
+}
+.methodDerived[data-on="true"] {
+  border-color: var(--color-border-accent);
+  color: var(--color-foreground-accent);
+}
+
+.methodMeta {
+  font-size: 11px;
+  color: var(--color-foreground-secondary);
+  font-weight: 400;
+  display: block;
+}
+.methodGroup {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-foreground-secondary);
+  margin: var(--spacing-300) 0 var(--spacing-150);
+}
+.methodGroup:first-child {
+  margin-top: 0;
+}
+
+/* statement preview */
+.statement {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-medium);
+  background: var(--color-background-secondary);
+  padding: var(--spacing-250);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+}
+.statementHead {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-foreground-secondary);
+  margin-bottom: 8px;
+  font-family: "Market Sans", sans-serif;
+}
+.statementRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--color-border-subtle);
+}
+.statementRow:last-child {
+  border-bottom: none;
+}
+
+.tokenChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 100vmax;
+  border: 1px solid var(--color-border-accent);
+  background: var(--color-background-education);
+  color: var(--color-foreground-accent);
+  font-size: 13px;
+  font-weight: 600;
+}
+.tokenChip button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  display: inline-flex;
+  padding: 0;
+}
+  .chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  }
+  .channelCardBtn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border-radius: inherit;
+  }
+  .channelCardBtn:focus-visible {
+  outline: 2px solid var(--color-foreground-accent);
+  outline-offset: 4px;
+  }
+.pairOption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-medium);
+  cursor: pointer;
+}
+.pairOption[data-on="true"] {
+  border-color: var(--color-border-accent);
+  background: var(--color-background-education);
+}
+.formSection {
+  border-top: 1px solid var(--color-border-subtle);
+  padding: var(--spacing-400);
+}
+.formSection:first-of-type {
+  border-top: none;
+}
+.formSectionTitle {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.formSectionSub {
+  font-size: 13px;
+  color: var(--color-foreground-secondary);
+  margin: 0 0 var(--spacing-300);
+  max-width: 60ch;
+}
+/* A one-line section label. The 60ch measure above is what wraps it, so the cap
+   has to be lifted as well as the wrap turned off. */
+.subOneLine {
+  max-width: none;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+/* Read-only identity: name, PPE, description and status across a single row.
+   Description gets the extra room; status needs only its badge. */
+.identityRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr) minmax(0, 1.6fr) minmax(0, 0.6fr);
+  gap: var(--spacing-400);
+  align-items: start;
+}
+
+/* Square "+" chip that follows the currency chips. */
+.addChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  min-height: 40px;
+  border: 1px dashed var(--color-border-accent);
+  border-radius: var(--radius-medium);
+  background: none;
+  color: var(--color-foreground-accent);
+  cursor: pointer;
+}
+.addChip:hover {
+  background: var(--color-background-education);
+}
+.addPanel {
+  margin-top: 12px;
+  padding: var(--spacing-300);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-medium);
+  background: var(--color-background-secondary);
+}
+.addPanelHead {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground-secondary);
+  margin-bottom: 10px;
+}
+
+/* Stacked fields whose labels carry section-title typography */
+.identityFields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-400);
+}
+.fieldTitle {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+.counter {
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--color-foreground-secondary);
+}
+.reviewList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+}
+.reviewList li {
+  display: flex;
+  gap: 8px;
+}
+.reviewList b {
+  min-width: 150px;
+  color: var(--color-foreground-secondary);
+  font-weight: 600;
+}

@@ -1,0 +1,370 @@
+/* Services Central: top nav (brand + categories + merchant) and left nav. */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background-elevated);
+}
+
+/* Top navigation --------------------------------------------------------- */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background-color: var(--color-background-elevated);
+  padding: var(--spacing-300) var(--spacing-500) 0;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-300);
+}
+.brandLogo {
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+.brandLogo svg {
+  width: 96px;
+  height: auto;
+}
+
+.topActions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-250);
+}
+.rolePicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-100);
+}
+.rolePickerLabel {
+  font-size: 12px;
+  color: var(--color-foreground-secondary);
+  white-space: nowrap;
+}
+.userPill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-border-medium);
+  border-radius: 999px;
+  padding: var(--spacing-150) var(--spacing-300);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-foreground-primary);
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.iconBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-background-secondary);
+  color: var(--color-foreground-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: none;
+}
+.iconBtn:hover {
+  background-color: var(--color-background-tertiary, var(--color-border-subtle));
+}
+.iconBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Page title */
+.title {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: var(--spacing-200) 0 var(--spacing-300);
+  color: var(--color-foreground-primary);
+}
+
+/* Category row */
+.catRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-400);
+  flex-wrap: wrap;
+}
+.cats {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-450);
+}
+.cat {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-100);
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-foreground-secondary);
+  padding: 0 0 var(--spacing-200);
+  border-bottom: 3px solid transparent;
+}
+.cat:hover {
+  color: var(--color-foreground-primary);
+}
+.catActive,
+.catActive:hover {
+  color: var(--color-foreground-primary);
+  border-bottom-color: var(--color-foreground-primary);
+}
+.merchant {
+  margin-left: auto;
+  font-size: 17px;
+  color: var(--color-foreground-primary);
+}
+.merchantLabel {
+  font-weight: 700;
+}
+.merchantValue {
+  font-weight: 400;
+}
+
+/* Body: left nav + content ---------------------------------------------- */
+.body {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+}
+.nav {
+  width: 240px;
+  flex: none;
+  padding: var(--spacing-300) var(--spacing-400) var(--spacing-500);
+}
+.navGroup + .navGroup {
+  margin-top: var(--spacing-400);
+}
+.navHeading {
+  margin: 0 0 var(--spacing-100);
+  padding: 0 12px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-foreground-primary);
+}
+.navDivider {
+  height: 1px;
+  margin: 0 12px var(--spacing-300);
+  background-color: var(--color-border-subtle);
+}
+.navItem {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-foreground-secondary);
+  padding: 9px 12px;
+  border-radius: var(--radius-medium);
+}
+.navItem:hover {
+  color: var(--color-foreground-accent);
+  background-color: var(--color-background-secondary);
+}
+.navItemActive,
+.navItemActive:hover {
+  font-weight: 700;
+  color: var(--color-foreground-primary);
+  background-color: var(--color-background-secondary);
+}
+
+/* Content ---------------------------------------------------------------- */
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: var(--spacing-300) var(--spacing-500) var(--spacing-700) var(--spacing-300);
+}
+.contentTitle {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0 0 var(--spacing-400);
+  color: var(--color-foreground-primary);
+}
+
+/* Payouts toolbar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-300);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-400);
+}
+.searchField {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-150);
+  flex: 1;
+  min-width: 240px;
+  max-width: 420px;
+  border: 1px solid var(--color-border-medium);
+  border-radius: 999px;
+  padding: var(--spacing-200) var(--spacing-350);
+  background-color: var(--color-background-secondary);
+  color: var(--color-foreground-secondary);
+}
+.searchField input {
+  border: none;
+  background: none;
+  outline: none;
+  flex: 1;
+  min-width: 0;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--color-foreground-primary);
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-200);
+  border: 1px solid var(--color-border-medium);
+  border-radius: 999px;
+  padding: var(--spacing-150) var(--spacing-350);
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--color-foreground-primary);
+}
+.pillStack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+}
+.pillLabel {
+  font-size: 11px;
+  color: var(--color-foreground-secondary);
+}
+.pillValue {
+  font-size: 15px;
+  font-weight: 500;
+}
+.pillText {
+  font-size: 15px;
+  font-weight: 500;
+}
+.filterPill {
+  color: var(--color-foreground-accent);
+  border-color: var(--color-foreground-accent);
+  font-weight: 600;
+}
+.resetLink {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--color-foreground-primary);
+  text-decoration: underline;
+  padding: 0;
+}
+
+/* Payouts table */
+.tableScroll {
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+.table th {
+  text-align: left;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-foreground-primary);
+  padding: var(--spacing-250) var(--spacing-300);
+  border-bottom: 1px solid var(--color-border-subtle);
+  white-space: nowrap;
+}
+.table td {
+  font-size: 15px;
+  color: var(--color-foreground-primary);
+  padding: var(--spacing-350) var(--spacing-300);
+  border-bottom: 1px solid var(--color-border-subtle);
+  white-space: nowrap;
+}
+.linkCell {
+  color: var(--color-foreground-accent);
+  text-decoration: underline;
+  font-weight: 500;
+}
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  border: 1px solid currentColor;
+}
+.statusOk {
+  color: var(--color-foreground-positive, #167a3c);
+}
+.statusFail {
+  color: var(--color-foreground-negative, #c33);
+}
+
+/* Placeholder for non-Payouts items */
+.placeholder {
+  font-size: 15px;
+  color: var(--color-foreground-secondary);
+  padding: var(--spacing-400) 0;
+}
+
+/* Back link on settings sub-pages */
+.settingsBack {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-50);
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-foreground-secondary);
+  padding: 0;
+  margin-bottom: var(--spacing-300);
+}
+.settingsBack:hover {
+  color: var(--color-foreground-accent);
+}
+
+@media (max-width: 860px) {
+  .top {
+    padding-inline: var(--spacing-300);
+  }
+  .nav {
+    width: 180px;
+    padding-inline: var(--spacing-300);
+  }
+  .main {
+    padding-right: var(--spacing-300);
+  }
+}
